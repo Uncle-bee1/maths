@@ -3,444 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professor Bee - Mathematical Tutor</title>
-    <img src="logo.jpg" alt="Logo" class="top-right-logo">
+    <title>Course Registration Portal</title>
     <style>
-    * {
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --logo-opacity: 0.05; /* Controls how faint the background logo is */
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--light-bg);
+            color: var(--secondary-color);
             line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), 
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%234a90e2"/><g fill="%23ffffff" opacity="0.1"><circle cx="200" cy="150" r="80"/><circle cx="1000" cy="450" r="120"/><circle cx="600" cy="300" r="100"/></g><g fill="%23ffffff"><path d="M500,250 L550,200 L600,250 L550,300 Z"/><!-- Triangle representing book --> <rect x="480" y="250" width="140" height="100" rx="5" fill="%23ffffff" stroke="%23333" stroke-width="2"/><!-- Book outline --><line x1="550" y1="200" x2="550" y2="300" stroke="%23333" stroke-width="2"/><!-- Pen --><line x1="630" y1="220" x2="650" y2="180" stroke="%23333" stroke-width="3"/><circle cx="650" cy="178" r="3" fill="%23333"/><!-- Ruler --><rect x="660" y="240" width="80" height="5" fill="%23333"/><rect x="660" y="250" width="80" height="2" fill="%23666"/><!-- Protractor --><path d="M660,280 A40,40 0 0,1 740,280" stroke="%23333" stroke-width="3" fill="none"/></g></svg>') center/cover no-repeat;
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 40px;
             position: relative;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: cover;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .cta-button:hover {
-            background-color: #ff5252;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
-        }
-
-        /* Currency Toggle */
-        .currency-toggle {
-            margin-top: 20px;
+        /* --- BACKGROUND LOGO WATERMARK --- */
+        .background-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            max-width: 600px;
+            height: auto;
+            opacity: var(--logo-opacity);
+            z-index: -1;
+            pointer-events: none;
             display: flex;
             justify-content: center;
+            align-items: center;
+        }
+
+        /* CSS-Only Logo Representation (Replace with <img> if you have a file) */        .logo-graphic {
+            font-size: 15vw;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            border: 5px solid var(--primary-color);
+            padding: 20px 40px;
+            border-radius: 15px;
+            transform: rotate(-15deg);
+        }
+
+        /* If you have an image file, use this class instead inside .background-logo:
+           .background-logo img { width: 100%; height: auto; } 
+        */
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
 
-        .currency-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
+        .brand-logo span {
+            background: var(--primary-color);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .nav-links button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 15px;
+            color: var(--secondary-color);
+            transition: color 0.3s;
         }
 
-        .currency-btn.active {
-            background: white;
-            color: #6a11cb;
+        .nav-links button:hover {
+            color: var(--primary-color);
         }
 
-        /* Courses Section */
+        /* --- MAIN CONTENT --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
-            color: #2c3e50;
-            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
         }
 
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-
-        .course-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Currency Selector */
+        .currency-selector {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-
-        .course-card h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-
-        .course-card p {
-            color: #7f8c8d;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-        .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #27ae60;
-            margin-bottom: 20px;
-        }
-
-        .buy-button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+        .currency-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-
-        .buy-button:hover {
-            background-color: #2980b9;
-        }
-
-        /* Tutors Section */
-        .tutors-section {
-            background-color: #ecf0f1;
-            padding: 60px 20px;
-            margin-bottom: 40px;
             border-radius: 20px;
+            margin: 0 5px;
+            transition: all 0.3s;
         }
 
-        .tutors-grid {
+        .currency-btn.active, .currency-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        /* Grid Layouts */
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .tutor-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .tutor-card h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+        .card:hover {
+            transform: translateY(-5px);
         }
 
-        .tutor-card p {            color: #7f8c8d;
-            margin-bottom: 20px;
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
         }
 
-        .register-button {
-            background-color: #e74c3c;
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 1rem 0;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
             width: 100%;
+            font-size: 1rem;
+            transition: background 0.3s;
         }
 
-        .register-button:hover {
-            background-color: #c0392b;
+        .btn-primary:hover {            background: #357abd;
         }
 
-        /* Registration Form */
-        .registration-form {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin: 40px 0;
+        /* Form Styles */
+        .form-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .form-group input,
+        .form-group input, 
         .form-group select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 1rem;
         }
 
-        .submit-button {
-            background-color: #9b59b6;            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-button:hover {
-            background-color: #8e44ad;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 40px;
-        }
-
-        /* Responsive Design */
+        /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
             }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .container {
-                width: 95%;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .hero {
-                padding: 60px 15px;
+            .nav-links {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links button {
+                margin: 0 5px;
+                font-size: 0.9rem;
+            }
+            .grid-container {
+                grid-template-columns: 1fr; /* Stack cards on mobile */
+            }
+
+            .logo-graphic {
+                font-size: 20vw; /* Larger logo on mobile background */
+                border-width: 3px;
             }
             
-            .courses-grid,
-            .tutors-grid {
-                grid-template-columns: 1fr;            }
-            
-            .registration-form {
-                padding: 25px 20px;
+            .form-container {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Professor Bee - Mathematical Tutor</h1>
-            <p>A work in progress, the future is assured</p>
-            <button class="cta-button" onclick="scrollToSection('courses')">Start Learning Now</button>
-            
-            <div class="currency-toggle">
-                <button class="currency-btn active" onclick="setCurrency('naira')">₦ Naira</button>
-                <button class="currency-btn" onclick="setCurrency('usd')">$ USD</button>
+
+    <!-- Background Watermark Logo -->
+    <div class="background-logo">
+        <!-- Option A: CSS Logo (Current) -->
+        <div class="logo-graphic">EDU</div>
+        
+        <!-- Option B: Image Logo (Uncomment below and add your file path to use an image) -->
+        <!-- <img src="your-logo.png" alt="Background Logo"> -->
+    </div>
+
+    <header>
+        <div class="navbar">
+            <div class="brand-logo">
+                <span>EDU</span> Portal
             </div>
+            <nav class="nav-links">
+                <button onclick="scrollToSection('courses')">Courses</button>
+                <button onclick="scrollToSection('tutors')">Tutors</button>
+                <button onclick="scrollToSection('register')">Register</button>
+            </nav>
         </div>
-    </section>
+    </header>
 
     <div class="container">
+        
+        <!-- Currency Section -->
+        <div class="currency-selector">
+            <h3>Select Currency</h3>
+            <br>
+            <button class="currency-btn active" onclick="setCurrency('USD')">USD ($)</button>
+            <button class="currency-btn" onclick="setCurrency('NGN')">NGN (₦)</button>
+            <button class="currency-btn" onclick="setCurrency('EUR')">EUR (€)</button>
+        </div>
         <!-- Courses Section -->
-        <h2 class="section-title" id="courses">Available Courses</h2>
-        <div class="courses-grid" id="coursesGrid">
-            <!-- Courses will be populated by JavaScript -->
+        <h2 id="courses" class="section-title">Available Courses</h2>
+        <div class="grid-container" id="courseList">
+            <!-- Courses will be injected here by JS -->
         </div>
 
         <!-- Tutors Section -->
-        <section class="tutors-section">
-            <h2 class="section-title">Our Expert Tutors</h2>
-            <div class="tutors-grid" id="tutorsGrid">
-                <!-- Tutors will be populated by JavaScript -->
-            </div>
-        </section>
+        <h2 id="tutors" class="section-title">Our Tutors</h2>
+        <div class="grid-container" id="tutorList">
+            <!-- Tutors will be injected here by JS -->
+        </div>
 
-        <!-- Registration Form -->
-        <h2 class="section-title">Register for a Course</h2>
-        <div class="registration-form">
+        <!-- Registration Form Section -->
+        <h2 id="register" class="section-title">Student Registration</h2>
+        <div class="form-container">
             <form id="registrationForm">
                 <div class="form-group">
                     <label for="studentName">Full Name</label>
-                    <input type="text" id="studentName" required placeholder="Enter your full name">
+                    <input type="text" id="studentName" required placeholder="Enter your name">
                 </div>
                 
                 <div class="form-group">
                     <label for="studentEmail">Email Address</label>
-                    <input type="email" id="studentEmail" required placeholder="Enter your email">                </div>
-                
+                    <input type="email" id="studentEmail" required placeholder="Enter your email">
+                </div>
+
                 <div class="form-group">
                     <label for="selectedCourse">Select Course</label>
                     <select id="selectedCourse" required>
-                        <option value="">Choose a course</option>
-                        <!-- Options will be populated by JavaScript -->
+                        <option value="">-- Choose a Course --</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="selectedTutor">Select Tutor</label>
+                    <label for="selectedTutor">Select Preferred Tutor</label>
                     <select id="selectedTutor" required>
-                        <option value="">Choose a tutor</option>
-                        <!-- Options will be populated by JavaScript -->
+                        <option value="">-- Choose a Tutor --</option>
                     </select>
                 </div>
-                
-                <button type="submit" class="submit-button">Register Now</button>
+
+                <button type="submit" class="btn-primary">Complete Registration</button>
             </form>
         </div>
+
     </div>
 
-    <footer>
-        <p>&copy; 2026 Professor Bee - Mathematical Tutor. All rights reserved.</p>
-    </footer>
-
     <script>
-        // Current currency state
-        let currentCurrency = 'naira';
-        
-        // Course data
-        const courses = [
-            { id: 'geometry', name: 'Geometry', description: 'Master geometric shapes, angles, and spatial relationships' },
-            { id: 'statistics', name: 'Statistics', description: 'Learn data analysis, probability, and statistical methods' },
-            { id: 'differentiation', name: 'Differentiation', description: 'Understand rates of change and derivatives' },
-            { id: 'integration', name: 'Integration', description: 'Master the fundamentals of integral calculus' },
-            { id: 'linear-equations', name: 'Linear Equations', description: 'Solve equations with one or more variables' },
-            { id: 'quadratic-equations', name: 'Quadratic Equations', description: 'Master quadratic formula and factorization' },
-            { id: 'numbers', name: 'Numbers', description: 'Explore number systems, properties, and operations' },
-            { id: 'series', name: 'Series', description: 'Learn arithmetic and geometric progressions' }
+        // Sample Data
+        const courses = [            { id: 1, name: "Web Development", priceUSD: 100, priceNGN: 150000, priceEUR: 90 },
+            { id: 2, name: "Data Science", priceUSD: 120, priceNGN: 180000, priceEUR: 110 },
+            { id: 3, name: "UI/UX Design", priceUSD: 90, priceNGN: 135000, priceEUR: 80 },
+            { id: 4, name: "Python Programming", priceUSD: 110, priceNGN: 165000, priceEUR: 100 }
         ];
-        
-        // Tutor data
+
         const tutors = [
-            { id: 'tutor1', name: 'Dr. Sarah Johnson', specialty: 'Algebra & Calculus' },
-            { id: 'tutor2', name: 'Prof. Michael Chen', specialty: 'Geometry & Trigonometry' },
-            { id: 'tutor3', name: 'Ms. Aisha Mohammed', specialty: 'Statistics & Probability' },
-            { id: 'tutor4', name: 'Mr. David Wilson', specialty: 'Advanced Mathematics' }
+            { id: 101, name: "Dr. Sarah Johnson" },
+            { id: 102, name: "Mr. David Okon" },
+            { id: 103, name: "Ms. Emily Chen" },
+            { id: 104, name: "Prof. Ahmed Musa" }
         ];
-        // Initialize the page
+
+        let currentCurrency = 'USD';
+
+        // Initialize Page
         function initPage() {
-            renderCourses();
-            renderTutors();
-            populateFormOptions();
-        }
-
-        // Render courses dynamically
-        function renderCourses() {
-            const coursesGrid = document.getElementById('coursesGrid');
-            coursesGrid.innerHTML = '';
-            
-            courses.forEach(course => {
-                const price = currentCurrency === 'naira' ? '₦3000' : '$5';
-                const courseCard = document.createElement('div');
-                courseCard.className = 'course-card';
-                courseCard.innerHTML = `
-                    <h3>${course.name}</h3>
-                    <p>${course.description}</p>
-                    <div class="price">${price}</div>
-                    <button class="buy-button" onclick="purchaseCourse('${course.id}', '${course.name}')">Buy Course</button>
-                `;
-                coursesGrid.appendChild(courseCard);
-            });
-        }
-
-        // Render tutors dynamically
-        function renderTutors() {
-            const tutorsGrid = document.getElementById('tutorsGrid');
-            tutorsGrid.innerHTML = '';
-            
-            tutors.forEach(tutor => {
-                const tutorCard = document.createElement('div');
-                tutorCard.className = 'tutor-card';
-                tutorCard.innerHTML = `
-                    <h3>${tutor.name}</h3>
-                    <p>${tutor.specialty}</p>
-                    <button class="register-button" onclick="selectTutor('${tutor.id}', '${tutor.name}')">Register</button>
-                `;
-                tutorsGrid.appendChild(tutorCard);
-            });
-        }
-
-        // Populate form dropdown options
-        function populateFormOptions() {
             const courseSelect = document.getElementById('selectedCourse');
             const tutorSelect = document.getElementById('selectedTutor');
-            
-            courses.forEach(course => {                const option = document.createElement('option');
+            const courseList = document.getElementById('courseList');
+            const tutorList = document.getElementById('tutorList');
+
+            // Populate Dropdowns
+            courses.forEach(course => {
+                const option = document.createElement('option');
                 option.value = course.id;
                 option.textContent = course.name;
                 courseSelect.appendChild(option);
@@ -452,6 +377,51 @@
                 option.textContent = tutor.name;
                 tutorSelect.appendChild(option);
             });
+
+            // Render Cards
+            renderCourses();
+            renderTutors();
+        }
+
+        function renderCourses() {
+            const courseList = document.getElementById('courseList');
+            courseList.innerHTML = '';
+
+            courses.forEach(course => {
+                let priceDisplay = '';
+                if(currentCurrency === 'USD') priceDisplay = `$${course.priceUSD}`;
+                else if(currentCurrency === 'NGN') priceDisplay = `₦${course.priceNGN.toLocaleString()}`;                else if(currentCurrency === 'EUR') priceDisplay = `€${course.priceEUR}`;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div>
+                        <h3>${course.name}</h3>
+                        <p>Comprehensive training module.</p>
+                        <div class="price">${priceDisplay}</div>
+                    </div>
+                    <button class="btn-primary" onclick="purchaseCourse(${course.id}, '${course.name}')">Purchase Course</button>
+                `;
+                courseList.appendChild(card);
+            });
+        }
+
+        function renderTutors() {
+            const tutorList = document.getElementById('tutorList');
+            tutorList.innerHTML = '';
+
+            tutors.forEach(tutor => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div>
+                        <h3>${tutor.name}</h3>
+                        <p>Senior Instructor</p>
+                    </div>
+                    <button class="btn-primary" style="background-color: var(--secondary-color);" onclick="selectTutor(${tutor.id}, '${tutor.name}')">Select Tutor</button>
+                `;
+                tutorList.appendChild(card);
+            });
         }
 
         // Set currency and update prices
@@ -461,13 +431,14 @@
             // Update currency buttons
             document.querySelectorAll('.currency-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if(btn.textContent.includes(currency)) {
+                    btn.classList.add('active');
+                }
             });
-            event.target.classList.add('active');
             
             // Re-render courses to update prices
             renderCourses();
         }
-
         // Purchase course function
         function purchaseCourse(courseId, courseName) {
             alert(`Thank you for purchasing ${courseName}! Your enrollment is confirmed.`);
@@ -483,13 +454,19 @@
         // Select tutor function
         function selectTutor(tutorId, tutorName) {
             alert(`You have selected ${tutorName} as your tutor!`);
+            // Optional: Auto-fill the form dropdown
+            document.getElementById('selectedTutor').value = tutorId;
+            scrollToSection('register');
         }
 
         // Scroll to section
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
-            element.scrollIntoView({ behavior: 'smooth' });
+            if(element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
+
         // Handle form submission
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -511,12 +488,11 @@
 
         // Helper functions to get names
         function getCourseName(courseId) {
-            const course = courses.find(c => c.id === courseId);
-            return course ? course.name : '';
+            const course = courses.find(c => c.id == courseId);            return course ? course.name : '';
         }
 
         function getTutorName(tutorId) {
-            const tutor = tutors.find(t => t.id === tutorId);
+            const tutor = tutors.find(t => t.id == tutorId);
             return tutor ? tutor.name : '';
         }
 
